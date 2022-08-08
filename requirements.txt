@@ -9,7 +9,6 @@ openpyxl
 xlrd
 streamlit_authenticator==0.1.5 
 pathlib
-os
 datetime
 fbprophet
 fbprophet.plot
