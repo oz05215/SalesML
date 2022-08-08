@@ -2,32 +2,13 @@ import streamlit as st
 import pandas as pd
 from pandas_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
-import sys
-import os
-import datetime
-from datetime import timedelta
-import extra_streamlit_components as stx
-import streamlit as st
-import time
 import numpy as np
-import os
-#import Plotly
-import pandas as pd
-import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
-import datetime
-import os.path
 from fbprophet.plot import plot_plotly
-import numpy as np
-import openpyxl
 from io import BytesIO
-from pyxlsb import open_workbook as open_xlsb
 
 
 st.set_page_config(page_title = 'Data Profiler',layout='wide')
-
-
 
 
     
