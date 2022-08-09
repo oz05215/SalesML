@@ -38,7 +38,7 @@ with file_path.open('rb') as file:
    
 #delete_all_cookies()
 
-authenticator = stauth.Authenticate(names, usernames, hashed_passwords,'sales_dashboard', 'abcdef', cookie_expiry_days=0)
+authenticator = stauth.Authenticate(names, usernames, hashed_passwords,'sales', 'abcdef', cookie_expiry_days=1)
 
 name, authentication_status, username = authenticator.login("Login","sidebar")
 
