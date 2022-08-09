@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
-from pandas_profiling import ProfileReport
-from streamlit_pandas_profiling import st_profile_report
+#from pandas_profiling import ProfileReport
+#from streamlit_pandas_profiling import st_profile_report
 import numpy as np
 import matplotlib.pyplot as plt
-from fbprophet.plot import plot_plotly
+#from fbprophet.plot import plot_plotly
+from prophet import plot_plotly
 from io import BytesIO
 
 
@@ -249,10 +250,11 @@ if authentication_status == True:
         
         
                 import logging
-                logging.getLogger('fbprophet').setLevel(logging.WARNING)
+                logging.getLogger('prophet').setLevel(logging.WARNING)
                 
                 
-                from fbprophet import Prophet
+#                from fbprophet import Prophet
+                from prophet import Prophet
                 
                 def sales_predictions(Store_ID, sales_df, holidays, periods):
                     sales_df = sales_df[sales_df['Store'] == Store_ID]
@@ -278,12 +280,12 @@ if authentication_status == True:
                     initial_range = (int(int(initial_range) / 365))*365
                     
                     
-                    from fbprophet.diagnostics import cross_validation
+                    from prophet.diagnostics import cross_validation
                     df_cv = cross_validation(model, initial= f'{initial_range} days', period='30 days', horizon = f'{dias_a_predecir} days')
         #            st.write(df_cv)
                     
                     
-                    from fbprophet.diagnostics import performance_metrics
+                    from prophet.diagnostics import performance_metrics
                     df_p = performance_metrics(df_cv)
                     df_p = pd.DataFrame(df_p)
                     df_p = df_p[['mdape']].mean()
@@ -293,7 +295,7 @@ if authentication_status == True:
                     
                     print(df_p)
         #            st.table(df_p)
-                    from fbprophet.plot import plot_cross_validation_metric
+                    from prophet.plot import plot_cross_validation_metric
                     fig = plot_cross_validation_metric(df_cv, metric='mape')
                     st.write(fig)
         
