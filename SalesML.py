@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #from fbprophet.plot import plot_plotly
 from prophet.plot import plot_plotly
 from io import BytesIO
-
+import seaborn as sns
 
 st.set_page_config(page_title = 'Sales Predictor')
 #st.set_page_config(page_title = 'Sales Predictor',layout='wide')
@@ -17,12 +17,6 @@ import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
 
-
-
-
-    
-#for item in st.session_state.items():
-#    item
 
 #User authentication
 
@@ -43,8 +37,7 @@ authenticator = stauth.Authenticate(names, usernames, hashed_passwords,'sales_da
 
 name, authentication_status, username = authenticator.login("Login","sidebar")
 
-#if authentication_status not in st.session_state:
-#    authentication_status = st.session_state.authentication_status
+
 
 if authentication_status == False:
     st.error('Username/Password is incorrect')
@@ -58,24 +51,8 @@ if authentication_status == True:
 
     with st.spinner("Generating Report"):   
 
-#        upload_file = st.file_uploader("upload .csv or .xlsx files not exceeding 200 mb")
+    
 
-
-        
-
-#    if upload_file is not None:
-        #time bing let load csv
-#        try:
-#            df = pd.read_excel(upload_file)
-#        except:
-#            df = df = pd.read_csv(upload_file)
-        
-        #generate report
-#        with st.spinner("Generating Report"):
-#            pr = ProfileReport(df)
-            
-#        st_profile_report(pr)
-        
 #################################
 
 
@@ -83,14 +60,6 @@ if authentication_status == True:
         
         st.title('Predicción de ventas')
         
-        #@st.cache(allow_output_mutation=True)
-        #def load_model(model_name):
-        #    if uploaded_file2 is not None:
-        #        with open(os.path.join(r'C:\Users\oscar\Desktop\Aden Business School\TFM\Streamlit',uploaded_file2.name), mode='wb') as f:
-        #            f.write(uploaded_file2.getbuffer())
-        #        global sales_train_df
-        #        sales_train_df = pd.read_csv(uploaded_file2)
-        #        return sales_train_df
             
         
         #text input
@@ -115,7 +84,7 @@ if authentication_status == True:
         
         
         st.markdown('---')
-        st.header('Documento de entrenamiento')
+        st.header('Documento Historico')
         st.subheader('Suba el documento que contiene el historial de ventas con la informacion mas reciente')
         st.caption('Nota: Las predicciones futuras se generaran empezando desde la ultima fecha que contenga el archivo')
         
@@ -154,9 +123,7 @@ if authentication_status == True:
         #        st.write(tienda.describe())
                 
         
-                
-        #    else:
-        #        st.warning('Porfavor seleccione el documento que desea subir')
+
                 #############################################################################################################################################################
         ######################################    
                 
@@ -190,7 +157,8 @@ if authentication_status == True:
                 st.write('### Cercano a 1, mucha correlacion con los resultados de las ventas')
                 
                 st.table(((sales_train_all_df.corr()['Sales'].sort_values(ascending=False))))
-                
+#                st.map(sales_train_all_df.corr()['Sales'])
+
                 
                 # SEPARATE THE YEAR FROM DATE
                 
@@ -205,46 +173,25 @@ if authentication_status == True:
                 
                 #PLOT THE SALES AND CUSTOMERS BY MONTH
                 
-                axis = sales_train_all_df.groupby('Month')[['Sales']].mean().plot(figsize = (10,5), marker = 'o', color = 'black')
-                
-                axis.set_title('Average Sales per Month')
-                
-                plt.figure()
                 
                 axis = tiendados.groupby('Month')[['Sales']].mean()
                 st.write('### Promedio en ventas por numero de mes para la tienda # :', numero_de_tienda)
                 st.line_chart(axis)
-                
-                axis = sales_train_all_df.groupby('Month')[['Customers']].mean().plot(figsize = (10,5), marker = 'o', color = 'r')
-                axis.set_title('Average Customers Per Month')
+
                 
                 
                 #PLOT THE SALES AND CUSTOMERS BY DAY
-                
-                axis = sales_train_all_df.groupby('Day')[['Sales']].mean().plot(figsize = (10,5), marker = 'o', color = 'black')
-                
+
                 st.session_state.axiss = tiendados.groupby('Day')[['Sales']].mean()
-                st.write('### Promedio de ventas por dia del mes para la tienda #: ', numero_de_tienda)
+                st.write('### Promedio de ventas por dia del mes')
                 st.line_chart(st.session_state.axiss)
-                
-                axis.set_title('Average Sales per Day')
-                
-                plt.figure()
-                
-                axis = sales_train_all_df.groupby('Day')[['Customers']].mean().plot(figsize = (10,5), marker = 'o', color = 'r')
-                axis.set_title('Average Customers Per Day')
                 
                 
                 #PLOT THE SALES AND CUSTOMERS BY WEEKDAY
                 
-                axis = sales_train_all_df.groupby('DayOfWeek')[['Sales']].mean().plot(figsize = (10,5), marker = 'o', color = 'black')
-                
-                axis.set_title('Average Sales per Weekday')
-                
-                plt.figure()
                 
                 axis = tiendados.groupby('DayOfWeek')[['Sales']].mean()
-                st.write('### Promedio en ventas por numero de dia de la semana para la tienda # :', numero_de_tienda)
+                st.write('### Promedio en ventas por numero de dia de la semana')
                 st.bar_chart(axis)
                 
         
@@ -320,10 +267,7 @@ if authentication_status == True:
                 
                 school_holidays = sales_train_all_df[sales_train_all_df['SchoolHoliday'] == 1].loc[:,'Date'].values
         
-        
-        
-        
-        
+
         
                 state_holidays = sales_train_all_df[(sales_train_all_df['StateHoliday'] == 'a') | (sales_train_all_df['StateHoliday'] == 'b')].loc[:,'Date'].values
                 
@@ -343,14 +287,7 @@ if authentication_status == True:
                 
                 sales_predictions(numero_de_tienda, sales_train_all_df,school_state_holidays,dias_a_predecir)
                 
-        
-        #        try:
-        #            if authenticator.reset_password(username, 'Reset password', 'sidebar'):
-        #                st.success('Password modified successfully')
-        #        except Exception as e:
-        #            st.error(e)
-                
-        #RESET PASSWORD WIDGET
+
         
         authenticator.logout('Logout','sidebar')
         
