@@ -3,11 +3,10 @@ import pandas as pd
 #from pandas_profiling import ProfileReport
 #from streamlit_pandas_profiling import st_profile_report
 import numpy as np
-import matplotlib.pyplot as plt
 #from fbprophet.plot import plot_plotly
 from prophet.plot import plot_plotly
 from io import BytesIO
-import seaborn as sns
+
 
 st.set_page_config(page_title = 'Sales Predictor')
 #st.set_page_config(page_title = 'Sales Predictor',layout='wide')
