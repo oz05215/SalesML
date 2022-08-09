@@ -58,25 +58,25 @@ if authentication_status == True:
 
         
         
-        st.title('Predicción de ventas')
+        st.title('Sales Predictor')
         
             
         
         #text input
         st.markdown('---')
-        st.subheader('Seleccione el codigo de la tienda de la cual desea generar la prediccion')
-        numero_de_tienda = st.number_input('Ingrese el identificador de la tienda', min_value=0,max_value=3000, value=0, step=1)
+        st.subheader('Select the store code from 1 to 5')
+        numero_de_tienda = st.number_input('Input Store id', min_value=0,max_value=3000, value=0, step=1)
         #describe = st.text_area(height=150)
         
         #Slider
         
         st.markdown('---')
-        st.subheader('Cantidad de días a predecir')
+        st.subheader('Number of days to predict')
         dias_a_predecir = st.slider(
-            'Mueva la barra hasta que obtenga la cantidad de dias que desea predecir en el futuro',0,365,0,5
+            'Move the slider until reaching the desired amount',0,365,0,5
             )
         
-        st.write('La cantidad de dias a predecir desde la ultima fecha del archivo son',dias_a_predecir,' días') 
+        st.write('Total number of days to be predicted',dias_a_predecir,' days') 
         
         ###################################################################################
         
@@ -84,18 +84,18 @@ if authentication_status == True:
         
         
         st.markdown('---')
-        st.header('Documento Historico')
-        st.subheader('Suba el documento que contiene el historial de ventas con la informacion mas reciente')
-        st.caption('Nota: Las predicciones futuras se generaran empezando desde la ultima fecha que contenga el archivo')
+        st.header('Historical file')
+        st.subheader('Upload the most recent historical information')
+        st.caption('Note: Predictions will start from the latest date in the document')
         
-        uploaded_file2 = st.file_uploader('Elija un documento:')
-        save_button2 = st.button('Procesar archivo')
+        uploaded_file2 = st.file_uploader('Choose the file:')
+        save_button2 = st.button('Process')
         global sales_train_df
         
         if save_button2:
             if uploaded_file2 is not None:
                 global sales_train_df
-                st.success('Archivo procesado exitosamente')
+                st.success('File is being processed')
                 sales_train_df = pd.read_csv(uploaded_file2)   
                    
                 #global sales_train_df
@@ -119,7 +119,7 @@ if authentication_status == True:
         
                 
                 tienda = sales_train_df[sales_train_df.Store==numero_de_tienda]
-                st.write('### Estadisticas para la tienda #: ',numero_de_tienda)
+                st.write('### Statistics for Store id: ',numero_de_tienda)
         #        st.write(tienda.describe())
                 
         
@@ -152,9 +152,9 @@ if authentication_status == True:
                 tiendados = sales_train_all_df[sales_train_all_df.Store==numero_de_tienda]
                 
                 #Find correlations
-                st.write('### Correlacion entre las variables')
-                st.write('### Cercano a 0, no hay correlacion con los resultados de las ventas')
-                st.write('### Cercano a 1, mucha correlacion con los resultados de las ventas')
+                st.write('### Variables correlation')
+                st.write('### Near 0, no correlation with sales')
+                st.write('### Near 1, high correlation with sales')
                 
                 st.table(((sales_train_all_df.corr()['Sales'].sort_values(ascending=False))))
 #                st.map(sales_train_all_df.corr()['Sales'])
@@ -175,7 +175,7 @@ if authentication_status == True:
                 
                 
                 axis = tiendados.groupby('Month')[['Sales']].mean()
-                st.write('### Promedio en ventas por numero de mes para la tienda # :', numero_de_tienda)
+                st.write('### Monthly average # :', numero_de_tienda)
                 st.line_chart(axis)
 
                 
@@ -183,7 +183,7 @@ if authentication_status == True:
                 #PLOT THE SALES AND CUSTOMERS BY DAY
 
                 st.session_state.axiss = tiendados.groupby('Day')[['Sales']].mean()
-                st.write('### Promedio de ventas por dia del mes')
+                st.write('### Daily average')
                 st.line_chart(st.session_state.axiss)
                 
                 
@@ -191,7 +191,7 @@ if authentication_status == True:
                 
                 
                 axis = tiendados.groupby('DayOfWeek')[['Sales']].mean()
-                st.write('### Promedio en ventas por numero de dia de la semana')
+                st.write('### Weekday average')
                 st.bar_chart(axis)
                 
         
@@ -237,7 +237,7 @@ if authentication_status == True:
                     df_p = pd.DataFrame(df_p)
                     df_p = df_p[['mdape']].mean()
                     percentage = "{:.2%}".format(df_p['mdape'])
-                    st.write('## El porcentaje del promedio de error absoluto (MAPE) es: ',percentage)
+                    st.write('## Mean Absolute Percentage Error (MAPE) is: ',percentage)
                     
                     
                     print(df_p)
@@ -259,9 +259,9 @@ if authentication_status == True:
                         processed_data = output.getvalue()
                         return processed_data
                     df_xlsx = to_excel(forecast)
-                    st.download_button(label='Guardar Historico con predicción',
+                    st.download_button(label='Save prediction',
                                                     data=df_xlsx ,
-                                                    file_name= f'Historico-Prediccion {dias_a_predecir} días.xlsx')      
+                                                    file_name= f'Prediction for {dias_a_predecir} days.xlsx')      
                 
               
                 
