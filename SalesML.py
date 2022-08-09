@@ -7,15 +7,20 @@ import numpy as np
 from prophet.plot import plot_plotly
 from io import BytesIO
 import xlsxwriter
-
-
-st.set_page_config(page_title = 'Sales Predictor')
-#st.set_page_config(page_title = 'Sales Predictor',layout='wide')
-
-    
 import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
+
+
+
+
+
+st.set_page_config(page_title = 'Sales Predictor',)
+#st.set_page_config(page_title = 'Sales Predictor',layout='wide')
+
+
+
+
 
 
 #User authentication
@@ -73,7 +78,7 @@ if authentication_status == True:
         st.markdown('---')
         st.subheader('Number of days to predict')
         dias_a_predecir = st.slider(
-            'Move the slider until reaching the desired amount',0,365,0,5
+            'Move the slider until reaching the desired amount of days to be predicted',0,365,0,5
             )
         
         st.write('Total number of days to be predicted',dias_a_predecir,' days') 
@@ -88,7 +93,7 @@ if authentication_status == True:
         st.subheader('Upload the most recent historical information')
         st.caption('Note: Predictions will start from the latest date in the document')
         
-        uploaded_file2 = st.file_uploader('Choose the file:')
+        uploaded_file2 = st.file_uploader('Choose a file in .csc or xlsx format:')
         save_button2 = st.button('Process')
         global sales_train_df
         
@@ -175,7 +180,7 @@ if authentication_status == True:
                 
                 
                 axis = tiendados.groupby('Month')[['Sales']].mean()
-                st.write('### Monthly average # :', numero_de_tienda)
+                st.write('### Monthly average:')
                 st.line_chart(axis)
 
                 
