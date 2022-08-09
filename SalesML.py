@@ -157,9 +157,9 @@ if authentication_status == True:
                 tiendados = sales_train_all_df[sales_train_all_df.Store==numero_de_tienda]
                 
                 #Find correlations
-                st.write('### Variables correlation')
-                st.write('### Near 0, no correlation with sales')
-                st.write('### Near 1, high correlation with sales')
+                st.write('#### Variables correlation')
+                st.write('#### Near 0, no correlation with sales')
+                st.write('#### Near 1, high correlation with sales')
                 
                 st.table(((sales_train_all_df.corr()['Sales'].sort_values(ascending=False))))
 #                st.map(sales_train_all_df.corr()['Sales'])
