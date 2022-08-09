@@ -285,21 +285,6 @@ if authentication_status == True:
                     
                     from fbprophet.diagnostics import performance_metrics
                     df_p = performance_metrics(df_cv)
-                    def to_excel(df):
-                        output = BytesIO()
-                        writer = pd.ExcelWriter(output, engine='xlsxwriter')
-                        df.to_excel(writer, index=False, sheet_name='Sheet1')
-                        workbook = writer.book
-                        worksheet = writer.sheets['Sheet1']
-                        format1 = workbook.add_format({'num_format': '0.00'}) 
-                        worksheet.set_column('A:A', None, format1)  
-                        writer.save()
-                        processed_data = output.getvalue()
-                        return processed_data
-                    df_p.to_excel(r'C:\Users\oscar\Desktop\Aden Business School\TFM\Streamlit\Metricas.xlsx')
-                    showdf_p = pd.read_excel(r'C:\Users\oscar\Desktop\Aden Business School\TFM\Streamlit\Metricas.xlsx')
-                    df_p = pd.DataFrame(showdf_p)
-        #            df_p = df_p['mdape'].astype(int)
                     df_p = pd.DataFrame(df_p)
                     df_p = df_p[['mdape']].mean()
                     percentage = "{:.2%}".format(df_p['mdape'])
