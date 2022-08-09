@@ -25,8 +25,8 @@ st.set_page_config(page_title = 'Sales Predictor',)
 
 #User authentication
 
-names = ['OscarZeledon','DaniBlanco']
-usernames = ['Oskir','Dblanco']
+names = ['OscarZeledon','DiegoR']
+usernames = ['Oskir','DiegoR']
 #passwords = ['Cestern22','12345']
 
 
