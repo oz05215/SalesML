@@ -6,6 +6,7 @@ import numpy as np
 #from fbprophet.plot import plot_plotly
 from prophet.plot import plot_plotly
 from io import BytesIO
+import xlsxwriter
 
 
 st.set_page_config(page_title = 'Sales Predictor')
