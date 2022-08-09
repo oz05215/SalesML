@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 #from fbprophet.plot import plot_plotly
-from prophet import plot_plotly
+from prophet.plot import plot_plotly
 from io import BytesIO
 
 
