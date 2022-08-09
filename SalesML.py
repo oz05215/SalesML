@@ -219,6 +219,7 @@ if authentication_status == True:
                     forecast = model.predict(future)
                     #figure = model.plot(forecast, xlabel ='Date', ylabel = 'Sales')
                     st.write('## Historical and Forecast Data')
+                    st.write('###### Select in slidebar below the range desired')
                     fig1 = plot_plotly(model,forecast)
                     st.plotly_chart(fig1)
                     st.write('## Forecast Components')
