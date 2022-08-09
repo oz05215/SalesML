@@ -10,6 +10,8 @@ xlrd
 streamlit_authenticator==0.1.5 
 pathlib
 datetime
+tornado==6.1
+pystan==2.19.1.1
 fbprophet
 
 
