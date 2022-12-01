@@ -16,7 +16,7 @@ import streamlit_authenticator as stauth
 
 st.write("# This Forecasting application was developed by Oscar Zeledon")
 st.write("")
-st.set_page_config(page_title = 'Sales Predictor',)
+st.set_page_config(page_title = 'Sales Predictor')
 st.write("Upload the excel file and click 'process' to obtain the forecast results")
 #st.set_page_config(page_title = 'Sales Predictor',layout='wide')
 
